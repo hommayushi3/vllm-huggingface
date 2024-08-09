@@ -10,7 +10,7 @@ TRUST_REMOTE_CODE=${TRUST_REMOTE_CODE:-false}
 GUIDED_DECODING_BACKEND=${GUIDED_DECODING_BACKEND:-"outlines"}
 
 # Entrypoint for the OpenAI API server
-CMD="vllm serve --host '0.0.0.0' --port 80 --model '$MODEL_PATH' --tensor-parallel-size '$NUM_SHARD' --dtype $DTYPE --guided-decoding-backend $GUIDED_DECODING_BACKEND"
+CMD="vllm serve $MODEL_PATH --host '0.0.0.0' --port 80 --tensor-parallel-size '$NUM_SHARD' --dtype $DTYPE --guided-decoding-backend $GUIDED_DECODING_BACKEND"
 
 # Append --max-model-len if its value is not -1
 if [ "$MAX_MODEL_LEN" -ne -1 ]; then

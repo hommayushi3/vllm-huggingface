@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "vllm-huggingface"
+version = "0.1.0"
+description = ""
+authors = ["Yushi Homma <hommayushi3@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+huggingface-hub = "^0.24.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
