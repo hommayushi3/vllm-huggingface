@@ -45,6 +45,8 @@ jobs:
           ${{ secrets.DOCKER_USER }}/vllm-huggingface:${{ steps.get_version.outputs.VERSION }}
 
     - name: Create and push tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         git config user.name github-actions
         git config user.email github-actions@github.com
