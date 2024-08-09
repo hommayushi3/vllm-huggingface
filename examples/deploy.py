@@ -32,7 +32,7 @@ if __name__ == "__main__":
             "env": env_vars,
             "url": VLLM_HF_IMAGE_URL,
         },
-        token=os.getenv("OPENAI_API_TOKEN"),
+        token=os.getenv("HF_TOKEN"),
     )
     
     print("Go to https://ui.endpoints.huggingface.co/{endpoint.namespace}/endpoints/{endpoint.name} to see the endpoint status.")
