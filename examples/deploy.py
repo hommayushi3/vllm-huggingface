@@ -35,4 +35,4 @@ if __name__ == "__main__":
         token=os.getenv("HF_TOKEN"),
     )
     
-    print("Go to https://ui.endpoints.huggingface.co/{endpoint.namespace}/endpoints/{endpoint.name} to see the endpoint status.")
+    print(f"Go to https://ui.endpoints.huggingface.co/{endpoint.namespace}/endpoints/{endpoint.name} to see the endpoint status.")
