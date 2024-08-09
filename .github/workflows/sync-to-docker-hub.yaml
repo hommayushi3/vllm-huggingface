@@ -44,11 +44,17 @@ jobs:
           ${{ secrets.DOCKER_USER }}/vllm-huggingface:latest
           ${{ secrets.DOCKER_USER }}/vllm-huggingface:${{ steps.get_version.outputs.VERSION }}
 
-    - name: Create and push tag
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git tag ${{ steps.get_version.outputs.VERSION }}
-        git push origin ${{ steps.get_version.outputs.VERSION }}
+    - name: Update latest git tag
+      uses: actions-ecosystem/action-get-latest-tag@v1
+      id: get-latest-tag
+
+    - uses: actions-ecosystem/action-bump-semver@v1
+      id: bump-semver
+      with:
+        current_version: ${{ steps.get-latest-tag.outputs.tag }}
+        level: minor
+
+    - uses: actions-ecosystem/action-push-tag@v1
+      with:
+        tag: ${{ steps.bump-semver.outputs.new_version }}
+        message: '${{ steps.bump-semver.outputs.new_version }}'
