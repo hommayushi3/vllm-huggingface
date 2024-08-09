@@ -30,7 +30,7 @@ if __name__ == "__main__":
         ],
         max_tokens=500,
         temperature=0.0,
-        stream=STREAM
+        stream=STREAM,
     )
 
     if STREAM:
