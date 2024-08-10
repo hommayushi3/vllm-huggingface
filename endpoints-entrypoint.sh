@@ -9,6 +9,7 @@ DTYPE=${DTYPE:-"auto"}
 TRUST_REMOTE_CODE=${TRUST_REMOTE_CODE:-false}
 GUIDED_DECODING_BACKEND=${GUIDED_DECODING_BACKEND:-"outlines"}
 KV_CACHE_DTYPE=${KV_CACHE_DTYPE:-"auto"}
+ENFORCE_EAGER=${ENFORCE_EAGER:-false}
 
 # Entrypoint for the OpenAI API server
 CMD="vllm serve $MODEL_PATH --host '0.0.0.0' --port 80 --tensor-parallel-size '$NUM_SHARD'"
@@ -29,6 +30,9 @@ if [ -n "$QUANTIZATION" ]; then
 fi
 if [ "$TRUST_REMOTE_CODE" = true ]; then
     CMD="$CMD --trust-remote-code"
+fi
+if [ "$ENFORCE_EAGER" = true ]; then
+    CMD="$CMD --enforce-eager"
 fi
 
 # Execute the command
