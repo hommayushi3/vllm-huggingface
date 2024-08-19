@@ -2,7 +2,7 @@
 NUM_SHARD=${NUM_SHARD:-$(nvidia-smi --list-gpus | wc -l)}
 MODEL_PATH=${MODEL_PATH:-"/repository"}
 MAX_MODEL_LEN=${MAX_MODEL_LEN:-1}
-MAX_NUM_BATCHED_TOKENS=${MAX_NUM_BATCHED_TOKENS:-4096}
+MAX_NUM_BATCHED_TOKENS=${MAX_NUM_BATCHED_TOKENS:-0}
 ENABLE_CHUNKED_PREFILL=${ENABLE_CHUNKED_PREFILL:-false}
 ENABLE_PREFIX_CACHING=${ENABLE_PREFIX_CACHING:-false}
 DISABLE_SLIDING_WINDOW=${DISABLE_SLIDING_WINDOW:-false}
@@ -19,7 +19,7 @@ GPU_MEMORY_UTILIZATION=${GPU_MEMORY_UTILIZATION:-0.9}
 # Entrypoint for the OpenAI API server
 CMD="vllm serve $MODEL_PATH --host '0.0.0.0' --port 80 --tensor-parallel-size '$NUM_SHARD'"
 CMD="$CMD --dtype $DTYPE --guided-decoding-backend $GUIDED_DECODING_BACKEND --kv-cache-dtype $KV_CACHE_DTYPE"
-CMD="$CMD --max-num-batched-tokens $MAX_NUM_BATCHED_TOKENS --gpu-memory-utilization $GPU_MEMORY_UTILIZATION"
+CMD="$CMD --gpu-memory-utilization $GPU_MEMORY_UTILIZATION"
 
 # Append --max-model-len if its value is not -1
 if [ "$MAX_MODEL_LEN" -ne -1 ]; then
@@ -42,6 +42,9 @@ if [ "$TRUST_REMOTE_CODE" = true ]; then
 fi
 if [ "$ENFORCE_EAGER" = true ]; then
     CMD="$CMD --enforce-eager"
+fi
+if [ "MAX_NUM_BATCHED_TOKENS" -ne 0 ]; then
+    CMD="$CMD --max-num-batched-tokens $MAX_NUM_BATCHED_TOKENS"
 fi
 
 # Execute the command
