@@ -22,10 +22,10 @@ CMD="$CMD --dtype $DTYPE --guided-decoding-backend $GUIDED_DECODING_BACKEND --kv
 CMD="$CMD --gpu-memory-utilization $GPU_MEMORY_UTILIZATION"
 
 # Append --max-model-len if its value is not -1
-if [ "$MAX_MODEL_LEN" -ne -1 ]; then
+if [ "$MAX_MODEL_LEN" -ne 1 ]; then
     CMD="$CMD --max-model-len $MAX_MODEL_LEN"
 fi
-if [ "$MAX_NUM_BATCHED_TOKENS" -ne -1 ]; then
+if [ "$MAX_NUM_BATCHED_TOKENS" -ne 1 ]; then
     CMD="$CMD --max-num-batched-tokens $MAX_NUM_BATCHED_TOKENS"
 fi
 if [ "$ENABLE_PREFIX_CACHING" = true ]; then
