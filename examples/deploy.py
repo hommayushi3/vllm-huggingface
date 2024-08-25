@@ -8,11 +8,16 @@ VLLM_HF_IMAGE_URL = "hommayushi3/vllm-huggingface"
 
 if __name__ == "__main__":
     load_dotenv()
-    repo_id = "microsoft/Phi-3-vision-128k-instruct"
+    repo_id = "microsoft/Phi-3.5-vision-instruct"
     env_vars = {
-        "MAX_MODEL_LEN": "3072",
         "DISABLE_SLIDING_WINDOW": "true",
+        "MAX_MODEL_LEN": "2048",
+        "MAX_NUM_BATCHED_TOKENS": "8192",
         "DTYPE": "bfloat16",
+        "GPU_MEMORY_UTILIZATION": "0.98",
+        "QUANTIZATION": "fp8",
+        "USE_V2_BLOCK_MANAGER": "true",
+        "VLLM_ATTENTION_BACKEND": "FLASH_ATTN",
         "TRUST_REMOTE_CODE": "true",
     }
 
