@@ -26,14 +26,6 @@ jobs:
         echo "New version: $version"
         echo "VERSION=$version" >> $GITHUB_OUTPUT
 
-    - name: Cache Docker layers
-      uses: actions/cache@v4
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
-
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -51,8 +43,6 @@ jobs:
         tags: |
           ${{ secrets.DOCKER_USER }}/vllm-huggingface:latest
           ${{ secrets.DOCKER_USER }}/vllm-huggingface:${{ steps.get_version.outputs.VERSION }}
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache-new
 
     - name: Update latest git tag
       uses: actions-ecosystem/action-get-latest-tag@v1
@@ -68,8 +58,3 @@ jobs:
       with:
         tag: ${{ steps.bump-semver.outputs.new_version }}
         message: '${{ steps.bump-semver.outputs.new_version }}'
-    
-    - name: Move cache
-      run: |
-        rm -rf /tmp/.buildx-cache
-        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
