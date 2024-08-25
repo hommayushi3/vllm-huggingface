@@ -1,4 +1,4 @@
-FROM vllm/vllm-openai:latest
+FROM vllm/vllm-openai:v0.5.5
 
 ENV DO_NOT_TRACK=1
 

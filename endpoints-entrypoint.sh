@@ -12,6 +12,7 @@ TRUST_REMOTE_CODE=${TRUST_REMOTE_CODE:-false}
 GUIDED_DECODING_BACKEND=${GUIDED_DECODING_BACKEND:-"outlines"}
 KV_CACHE_DTYPE=${KV_CACHE_DTYPE:-"auto"}
 ENFORCE_EAGER=${ENFORCE_EAGER:-false}
+USE_V2_BLOCK_MANAGER=${USE_V2_BLOCK_MANAGER:-false}
 VLLM_ATTENTION_BACKEND=${VLLM_ATTENTION_BACKEND:-"FLASH_ATTN"}
 GPU_MEMORY_UTILIZATION=${GPU_MEMORY_UTILIZATION:-0.9}
 
@@ -45,6 +46,9 @@ if [ "$TRUST_REMOTE_CODE" = true ]; then
 fi
 if [ "$ENFORCE_EAGER" = true ]; then
     CMD="$CMD --enforce-eager"
+fi
+if [ "$USE_V2_BLOCK_MANAGER" = true ]; then
+    CMD="$CMD --use-v2-block-manager"
 fi
 
 # Execute the command
